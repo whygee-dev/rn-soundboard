@@ -9,17 +9,12 @@ Choose, download, record samples and play them with pads.
 Install dependencies
 
 ```bash
-  cd app
-  npm install // or yarn
-  cd ../nest-api
   npm install // or yarn
 ```
 
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
-
-expo app .env file
 
 `FREESOUND_TOKEN=[YOUR FREESOUND API KEY]`
 
