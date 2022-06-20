@@ -97,13 +97,7 @@ const Recorder = (props: Props) => {
 
         {shouldAskForName && (
           <>
-            <TextInput
-              placeholder="Record name (must be unique)"
-              placeholderTextColor="#fff"
-              style={styles.input}
-              onChangeText={setName}
-              value={name}
-            ></TextInput>
+            <TextInput placeholder="Record name" placeholderTextColor="#fff" style={styles.input} onChangeText={setName} value={name}></TextInput>
 
             <View>
               <Button title={"Save"} onPress={saveRecording} />
