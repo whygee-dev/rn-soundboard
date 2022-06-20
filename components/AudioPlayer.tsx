@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from "react-native";
 import { default as FontAwesomeIcon } from "react-native-vector-icons/FontAwesome";
 import { AVPlaybackStatus, Sample, SampleType } from "../redux/types";
@@ -52,6 +52,15 @@ const AudioPlayer = (props: Props) => {
     const s = Math.round(ms / 1000);
     return s < 10 ? "0" + s : s;
   };
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log("Unloading Sound " + props.sample.path);
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   return (
     <View style={styles.container}>

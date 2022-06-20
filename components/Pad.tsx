@@ -55,15 +55,6 @@ const Pad = React.memo((props: Props) => {
     }
   };
 
-  // useEffect(() => {
-  //   return sound
-  //     ? () => {
-  //         console.log("Unloading Sound " + props.sample.path);
-  //         sound.unloadAsync();
-  //       }
-  //     : undefined;
-  // }, [sound]);
-
   return (
     // @ts-ignore
     <Pressable unstable_pressDelay={0} android_disableSound style={styles.container} onLongPress={onLongPress} onPress={onPress}>
