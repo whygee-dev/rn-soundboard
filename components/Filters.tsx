@@ -17,8 +17,6 @@ const Filters = (props: Props) => {
   const userFilters = useSelector(selectFilters);
 
   const onFilterSelect = (filter: SampleFilter) => {
-    console.log(isFilterIn(filter, userFilters));
-
     if (isFilterIn(filter, userFilters)) {
       dispatch(removeFilter(filter));
     } else {
@@ -53,7 +51,7 @@ const Filters = (props: Props) => {
           {props.filters.map((f) => {
             return (
               <TouchableOpacity key={f.display} onPress={() => onFilterSelect(f)}>
-                <View style={[styles.filter, { backgroundColor: isFilterIn(f, userFilters) ? "#050527" : "#1a1a40" }]}>
+                <View style={[styles.filter, { backgroundColor: isFilterIn(f, userFilters) ? "#f72585" : "#b5179e" }]}>
                   <Text color="#fff">{f.display}</Text>
                 </View>
               </TouchableOpacity>
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: window.height / 3.25,
     width: window.width,
-    backgroundColor: "#232356",
+    backgroundColor: "#7209b7",
     position: "absolute",
     top: 0,
     borderBottomStartRadius: 50,
