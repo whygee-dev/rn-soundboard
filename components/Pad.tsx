@@ -4,7 +4,7 @@ import { dimensions } from "../tools/constants";
 import { AVPlaybackStatus, Sample, SampleType } from "../redux/types";
 import { ExtendedAudio } from "../tools/ExtendedAudio";
 import { Audio } from "expo-av";
-import { primaryBlue } from "../theme/colors";
+import { blue } from "../theme/colors";
 import { AVPlaybackSource, AVPlaybackStatus as OGAV } from "expo-av/build/AV.types";
 import { soundMap } from "../tools/SoundMap";
 
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
   container: {
     width: dimensions.width / 6,
     height: dimensions.width / 6,
-    backgroundColor: primaryBlue,
+    backgroundColor: blue,
     position: "relative",
     borderRadius: 10,
     zIndex: 1,

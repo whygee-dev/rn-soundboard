@@ -3,13 +3,12 @@ import { Dimensions, StyleSheet, View, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Text from "../components/Text";
 import Filters from "../components/Filters";
-import { selectFilteredLibrarySamples, selectLibrarySamples } from "../redux/slices/samplesSlice";
+import { selectFilteredLibrarySamples } from "../redux/slices/samplesSlice";
 import { SAMPLE_FILTERS } from "../redux/types";
 import SamplesList from "../components/SamplesList";
 
 const Library = () => {
   const samples = useSelector(selectFilteredLibrarySamples);
-  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>

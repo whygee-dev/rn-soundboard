@@ -9,6 +9,7 @@ import Button from "./Button";
 import { useDispatch } from "react-redux";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import Text from "./Text";
+import { mediumPink } from "../theme/colors";
 
 type Props = {
   padInfo: MutableRefObject<{ position: number; sample: Sample } | undefined>;
@@ -101,19 +102,19 @@ export const styles = StyleSheet.create({
     position: "relative",
   },
   marker: {
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
   },
   selectedSlider: {
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
   },
   picker: {
     marginHorizontal: Dimensions.get("window").width / 8,
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
     color: "white",
     marginTop: 50,
   },
   pickerItem: {
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
     color: "white",
   },
   sliderContainer: { alignSelf: "center" },

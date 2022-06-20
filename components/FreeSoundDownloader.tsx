@@ -9,6 +9,7 @@ import Button from "./Button";
 import * as FileSystem from "expo-file-system";
 import { addActiveSampleAt, addLibrarySample, selectLibrarySamples } from "../redux/slices/samplesSlice";
 import { now } from "../tools/Date";
+import { mediumPink } from "../theme/colors";
 
 type Props = {
   padInfo: MutableRefObject<{ position: number; sample: Sample } | undefined>;
@@ -131,7 +132,7 @@ const FreeSoundDownloader = (props: Props) => {
               <Picker.Item style={styles.pickerItem} label={s.name} value={s} key={s.id} />
             ))}
           </Picker>
-          {loading ? <ActivityIndicator size={48} color="#b5179e" /> : <Button title="Save" onPress={download}></Button>}
+          {loading ? <ActivityIndicator size={48} color={mediumPink} /> : <Button title="Save" onPress={download}></Button>}
         </>
       )}
     </View>
@@ -158,11 +159,11 @@ const styles = StyleSheet.create({
   },
   picker: {
     marginHorizontal: Dimensions.get("window").width / 8,
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
     color: "white",
   },
   pickerItem: {
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
     color: "white",
   },
   input: {
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     color: "white",
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
   },
   flatlist: {
     flexGrow: 1,

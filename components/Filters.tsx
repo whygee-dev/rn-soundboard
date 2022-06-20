@@ -6,6 +6,7 @@ import Text from "./Text";
 import { SampleFilter } from "../redux/types";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFilters, addFilter, removeFilter } from "../redux/slices/samplesSlice";
+import { darkPink, lightPink, mediumPink } from "../theme/colors";
 
 type Props = {
   filters: SampleFilter[];
@@ -51,7 +52,7 @@ const Filters = (props: Props) => {
           {props.filters.map((f) => {
             return (
               <TouchableOpacity key={f.display} onPress={() => onFilterSelect(f)}>
-                <View style={[styles.filter, { backgroundColor: isFilterIn(f, userFilters) ? "#f72585" : "#b5179e" }]}>
+                <View style={[styles.filter, { backgroundColor: isFilterIn(f, userFilters) ? lightPink : mediumPink }]}>
                   <Text color="#fff">{f.display}</Text>
                 </View>
               </TouchableOpacity>
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: window.height / 3.25,
     width: window.width,
-    backgroundColor: "#7209b7",
+    backgroundColor: darkPink,
     position: "absolute",
     top: 0,
     borderBottomStartRadius: 50,

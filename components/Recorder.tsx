@@ -8,6 +8,7 @@ import * as FileSystem from "expo-file-system";
 import { Sample, SampleType } from "../redux/types";
 import { useSelector } from "../redux/hooks";
 import { now } from "../tools/Date";
+import { mediumPink } from "../theme/colors";
 
 type Props = {
   padInfo: MutableRefObject<{ position: number; sample: Sample } | undefined>;
@@ -131,10 +132,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     color: "white",
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
   },
   cancelBtn: {
-    backgroundColor: "#b5179e",
+    backgroundColor: mediumPink,
   },
 });
 

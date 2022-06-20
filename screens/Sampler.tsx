@@ -6,7 +6,7 @@ import Pad from "../components/Pad";
 import { selectActiveSamples } from "../redux/slices/samplesSlice";
 import Modal from "react-native-modal";
 import { Sample } from "../redux/types";
-import { primaryBlue } from "../theme/colors";
+import { blue, darkPink } from "../theme/colors";
 import Text from "../components/Text";
 import Recorder from "../components/Recorder";
 import Settings from "../components/Settings";
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     height: dimensions.height / 2,
     width: dimensions.width,
-    backgroundColor: "#7209b7",
+    backgroundColor: darkPink,
     borderTopEndRadius: 15,
     borderTopStartRadius: 15,
     position: "absolute",

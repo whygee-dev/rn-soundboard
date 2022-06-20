@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { removeLibrarySample } from "../redux/slices/samplesSlice";
 import MusicPlayer from "./AudioPlayer";
 import Icon from "react-native-vector-icons/Entypo";
+import { blue, lightPink } from "../theme/colors";
 
 type Props = {
   sample: Sample;
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: window.width / 8,
     flexDirection: "row",
-    backgroundColor: "#560bad",
+    backgroundColor: blue,
     paddingVertical: 20,
     paddingHorizontal: 10,
     borderRadius: 12,
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
 
   remove: {
-    backgroundColor: "#F72585",
+    backgroundColor: lightPink,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

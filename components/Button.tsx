@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, Pressable, GestureResponderEvent, ViewStyle, TextStyle, TouchableOpacity, Dimensions } from "react-native";
+import { lightPink } from "../theme/colors";
 
 type Props = {
   onPress: (event: GestureResponderEvent) => void;
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 8,
     elevation: 0,
-    backgroundColor: "#f72585",
+    backgroundColor: lightPink,
     borderWidth: 0,
     marginHorizontal: Dimensions.get("window").width / 4,
     marginVertical: 10,
