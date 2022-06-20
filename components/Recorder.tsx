@@ -63,7 +63,13 @@ const Recorder = (props: Props) => {
         if (librarySamples.find((s) => s.name === saveName)) {
           console.warn("A sample with the specified name already exists. Please choose another one");
         } else {
-          const sample = { name: saveName, path: FileSystem.documentDirectory + id, id: split[split.length - 1], type: SampleType.RECORDED };
+          const sample: Sample = {
+            duration: recording?._finalDurationMillis ? recording._finalDurationMillis / 1000 : undefined,
+            name: saveName,
+            path: FileSystem.documentDirectory + id,
+            id: split[split.length - 1],
+            type: SampleType.RECORDED,
+          };
 
           props.close();
 
