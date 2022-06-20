@@ -14,10 +14,10 @@ const Splash = ({ children }: { children?: any }) => {
   const startAsync = async () => {
     await Font.loadAsync({ "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf") });
 
-    //if (samples.length === MAX_ROWS * MAX_COLUMNS) {
-    console.log("Using default samples");
-    dispatch(setActiveSamples(DEFAULT_SAMPLES));
-    //}
+    if (samples.length !== MAX_ROWS * MAX_COLUMNS) {
+      console.log("Using default samples");
+      dispatch(setActiveSamples(DEFAULT_SAMPLES));
+    }
   };
 
   if (!appIsReady) {

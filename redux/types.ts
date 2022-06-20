@@ -1,16 +1,3 @@
-export type Track = {
-  trackName: string;
-  artistName: string;
-  previewUrl: string;
-  trackId: number;
-  artworkUrl100: string;
-  kind: string;
-  description?: string;
-  collectionId?: number;
-  collectionName?: string;
-  wrapperType?: string;
-};
-
 export type Sample = {
   type: SampleType;
   path: string | number;
@@ -26,6 +13,17 @@ export enum SampleType {
   "FREESOUND",
   "RECORDED",
 }
+
+export type SampleFilter = {
+  type: SampleType;
+  display: string;
+};
+
+export const SAMPLE_FILTERS: SampleFilter[] = [
+  { type: SampleType.DEFAULT, display: "Default" },
+  { type: SampleType.FREESOUND, display: "FreeSound" },
+  { type: SampleType.RECORDED, display: "Recorded" },
+];
 
 export type AVPlaybackStatus = {
   isLoaded: true;
@@ -47,8 +45,3 @@ export type AVPlaybackStatus = {
   isLooping: boolean;
   didJustFinish: boolean;
 } | null;
-
-export type Filter = {
-  name: string;
-  display: string;
-};

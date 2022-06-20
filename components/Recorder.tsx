@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, Dimensions } from "react-native";
 import Button from "./Button";
 import { Audio } from "expo-av";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { addActiveSampleAt, addLibrarySample, selectLibrarySamples } from "../re
 import * as FileSystem from "expo-file-system";
 import { Sample, SampleType } from "../redux/types";
 import { useSelector } from "../redux/hooks";
+import { now } from "../tools/Date";
 
 type Props = {
   padInfo: MutableRefObject<{ position: number; sample: Sample } | undefined>;
@@ -50,15 +51,18 @@ const Recorder = (props: Props) => {
       const id = split[split.length - 1];
       const newLocation = FileSystem.documentDirectory + id;
 
+      // by default expo stores recordings in the cache directory, move it to the document directory
       await FileSystem.moveAsync({ from: uri, to: newLocation });
+
+      const saveName = name + " " + now();
 
       if (!(await FileSystem.getInfoAsync(newLocation)).exists) {
         console.warn("Failed to save recorded audio");
       } else {
-        if (librarySamples.find((s) => s.name === name)) {
+        if (librarySamples.find((s) => s.name === saveName)) {
           console.warn("A sample with the specified name already exists. Please choose another one");
         } else {
-          const sample = { name, path: FileSystem.documentDirectory + id, id: split[split.length - 1], type: SampleType.RECORDED };
+          const sample = { name: saveName, path: FileSystem.documentDirectory + id, id: split[split.length - 1], type: SampleType.RECORDED };
 
           props.close();
 
@@ -79,27 +83,64 @@ const Recorder = (props: Props) => {
     setRecording(undefined);
   };
 
+  const cancelRecording = () => {
+    setRecording(undefined);
+    setShouldAskForName(false);
+  };
+
   return (
     <View style={styles.container}>
-      <Button title={recording && !shouldAskForName ? "Stop Recording" : "Start Recording"} onPress={recording ? stopRecording : startRecording} />
+      <View style={[styles.content, shouldAskForName ? { height: Dimensions.get("window").height / 2.6 } : {}]}>
+        {!shouldAskForName && (
+          <Button title={recording ? "Stop Recording" : "Start Recording"} onPress={recording ? stopRecording : startRecording} />
+        )}
 
-      {shouldAskForName && (
-        <>
-          <TextInput style={styles.input} onChangeText={setName} value={name}></TextInput>
-          <Button title={"Save"} onPress={saveRecording} />
-        </>
-      )}
+        {shouldAskForName && (
+          <>
+            <TextInput
+              placeholder="Record name (must be unique)"
+              placeholderTextColor="#fff"
+              style={styles.input}
+              onChangeText={setName}
+              value={name}
+            ></TextInput>
+
+            <View>
+              <Button title={"Save"} onPress={saveRecording} />
+              <Button containerStyle={styles.cancelBtn} title={"Cancel"} onPress={cancelRecording} />
+            </View>
+          </>
+        )}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    height: Dimensions.get("window").height / 2.6,
+    justifyContent: "flex-end",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+
+    justifyContent: "space-between",
+  },
   input: {
     height: 40,
-    margin: 12,
-    borderWidth: 1,
+    marginTop: 40,
+    marginHorizontal: Dimensions.get("window").width / 8,
+    borderWidth: 0,
+    borderRadius: 8,
     padding: 10,
+    color: "white",
+    backgroundColor: "#b5179e",
+  },
+  cancelBtn: {
+    backgroundColor: "#b5179e",
   },
 });
 

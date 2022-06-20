@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image, Keyboard } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../screens/Sampler";
-import Sequencer from "../screens/Sequencer";
+import Library from "../screens/Library";
 
 const Tab = createBottomTabNavigator();
 
@@ -51,8 +51,8 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
-        name="Sequencer"
-        component={Sequencer}
+        name="Library"
+        component={Library}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image source={focused ? require("../assets/icons/SequencerActive.png") : require("../assets/icons/Sequencer.png")} />

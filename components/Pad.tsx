@@ -42,14 +42,11 @@ const Pad = React.memo((props: Props) => {
       soundRef.current = cached.sound;
       console.log("Using cache", cached.start, cached.end);
     } else {
-      const { sound } = await (
-        await new ExtendedAudio().getInstance()
-      ).Sound.createAsync(
-        props.sample.type === SampleType.DEFAULT ? (props.sample.path as AVPlaybackSource) : { uri: String(props.sample.path) },
-        props.sample.start ? { positionMillis: props.sample.start * 1000, progressUpdateIntervalMillis: 100 } : undefined,
-        (s) => onPositionUpdate(s, props.sample.end),
-        props.sample.type === SampleType.FREESOUND
-      );
+      const source = props.sample.type === SampleType.DEFAULT ? (props.sample.path as AVPlaybackSource) : { uri: String(props.sample.path) };
+      const initialStatus = props.sample.start ? { positionMillis: props.sample.start * 1000, progressUpdateIntervalMillis: 100 } : undefined;
+      const onPlaybackStatusUpdate = (s: OGAV) => onPositionUpdate(s, props.sample.end);
+
+      const { sound } = await (await new ExtendedAudio().getInstance()).Sound.createAsync(source, initialStatus, onPlaybackStatusUpdate);
 
       soundRef.current = sound;
       await sound.playAsync();

@@ -34,7 +34,7 @@ const Sampler = () => {
 
         const sample = samples[index];
 
-        row.push(<Pad onEdit={() => onEditPad(sample, index)} sample={sample} key={sample.id + String(i) + String(j)} />);
+        row.push(<Pad onEdit={() => onEditPad(sample, index)} sample={sample} key={sample.id + String(i) + String(j) + sample.name} />);
       }
 
       result.push(row);
@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
   },
 
   modalContainer: {
-    height: dimensions.height - 40,
+    height: dimensions.height / 2,
     width: dimensions.width,
-    backgroundColor: primaryBlue,
+    backgroundColor: "#7209b7",
     borderTopEndRadius: 15,
     borderTopStartRadius: 15,
     position: "absolute",
-    top: 20,
+    bottom: 0,
   },
 
   swipableIndicator: {

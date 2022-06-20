@@ -1,13 +1,14 @@
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 import React, { MutableRefObject, useEffect, useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, Dimensions, ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFetchTimeout, setFetchTimeout } from "../redux/slices/extrasSlice";
 import { Sample, SampleType } from "../redux/types";
 import Button from "./Button";
 import * as FileSystem from "expo-file-system";
 import { addActiveSampleAt, addLibrarySample, selectLibrarySamples } from "../redux/slices/samplesSlice";
+import { now } from "../tools/Date";
 
 type Props = {
   padInfo: MutableRefObject<{ position: number; sample: Sample } | undefined>;
@@ -32,7 +33,6 @@ const FreeSoundDownloader = (props: Props) => {
   const searchQuery = async (search: string) => {
     if (search.replace(/\s/g, "") === "") return;
 
-    console.log("tok", process.env.FREESOUND_TOKEN);
     setLoading(true);
 
     try {
@@ -65,6 +65,8 @@ const FreeSoundDownloader = (props: Props) => {
   }, [search]);
 
   const download = async () => {
+    setLoading(true);
+
     if (props.padInfo.current === undefined) {
       console.warn("Couldn't resolve edited pad position, please close this modal and reopen it.");
       return;
@@ -74,6 +76,8 @@ const FreeSoundDownloader = (props: Props) => {
       console.warn("Please select a sample to download");
       return;
     }
+
+    selectedResult.name = selectedResult.name + " " + now();
 
     if (librarySamples.find((s) => selectedResult.name === s.name)) {
       console.warn("You have already a local/downloaded sample named " + selectedResult.name);
@@ -106,20 +110,28 @@ const FreeSoundDownloader = (props: Props) => {
     );
 
     dispatch(addLibrarySample(sample));
+
+    setLoading(false);
   };
 
   return (
-    <View>
-      <TextInput style={styles.input} onChangeText={setSearch} value={search}></TextInput>
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Search for a sample"
+        placeholderTextColor="#ffffff"
+        style={styles.input}
+        onChangeText={setSearch}
+        value={search}
+      ></TextInput>
 
       {results.length > 0 && (
         <>
-          <Picker onValueChange={(value: FreeSoundItem) => setSelectedResult(value)} selectedValue={selectedResult}>
+          <Picker style={styles.picker} onValueChange={(value: FreeSoundItem) => setSelectedResult(value)} selectedValue={selectedResult}>
             {results.map((s, index) => (
-              <Picker.Item label={s.name} value={s} key={s.id} />
+              <Picker.Item style={styles.pickerItem} label={s.name} value={s} key={s.id} />
             ))}
           </Picker>
-          <Button title="Save" onPress={download}></Button>
+          {loading ? <ActivityIndicator size={48} color="#b5179e" /> : <Button title="Save" onPress={download}></Button>}
         </>
       )}
     </View>
@@ -127,7 +139,13 @@ const FreeSoundDownloader = (props: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    height: Dimensions.get("window").height / 2.6,
+    justifyContent: "space-between",
+    position: "relative",
+  },
   item: {
     display: "flex",
     flexDirection: "row",
@@ -138,11 +156,24 @@ const styles = StyleSheet.create({
   itemName: {
     maxWidth: "80%",
   },
+  picker: {
+    marginHorizontal: Dimensions.get("window").width / 8,
+    backgroundColor: "#b5179e",
+    color: "white",
+  },
+  pickerItem: {
+    backgroundColor: "#b5179e",
+    color: "white",
+  },
   input: {
     height: 40,
-    margin: 12,
-    borderWidth: 1,
+    marginTop: 40,
+    marginHorizontal: Dimensions.get("window").width / 8,
+    borderWidth: 0,
+    borderRadius: 8,
     padding: 10,
+    color: "white",
+    backgroundColor: "#b5179e",
   },
   flatlist: {
     flexGrow: 1,

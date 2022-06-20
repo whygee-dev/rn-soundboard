@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 // @ts-ignore
 import { Picker } from "@react-native-picker/picker";
 import { Sample } from "../redux/types";
@@ -58,20 +58,27 @@ const Settings = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <Picker onValueChange={(value: Sample) => setSelectedSample(value)} selectedValue={selectedSample}>
+      <Picker
+        dropdownIconColor="#ffffff"
+        style={styles.picker}
+        onValueChange={(value: Sample) => setSelectedSample(value)}
+        selectedValue={selectedSample}
+      >
         {samples.map((s, index) => (
-          <Picker.Item label={s.name} value={s} key={s.id + s.name} />
+          <Picker.Item style={styles.pickerItem} label={s.name} value={s} key={s.id + s.name} />
         ))}
       </Picker>
 
-      {selectedSample?.duration && (
+      {selectedSample?.duration && +selectedSample.duration >= 1 && (
         <View>
           <MultiSlider
+            selectedStyle={styles.selectedSlider}
+            markerStyle={styles.marker}
             min={0}
             max={Number(selectedSample.duration)}
             values={[trimmingInfo.start, Number(trimmingInfo.end) || Number(selectedSample.duration)]}
             onValuesChange={handleTrimmerChange}
-            containerStyle={{ alignSelf: "center" }}
+            containerStyle={styles.sliderContainer}
           />
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <Text>
@@ -80,14 +87,40 @@ const Settings = (props: Props) => {
           </View>
         </View>
       )}
-      <Button title={"Save"} onPress={saveSettings} />
+      <Button containerStyle={styles.saveButton} title={"Save"} onPress={saveSettings} />
     </View>
   );
 };
 
 export const styles = StyleSheet.create({
-  container: {},
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    height: Dimensions.get("window").height / 2.6,
+    justifyContent: "space-between",
+    position: "relative",
+  },
+  marker: {
+    backgroundColor: "#b5179e",
+  },
+  selectedSlider: {
+    backgroundColor: "#b5179e",
+  },
+  picker: {
+    marginHorizontal: Dimensions.get("window").width / 8,
+    backgroundColor: "#b5179e",
+    color: "white",
+    marginTop: 50,
+  },
+  pickerItem: {
+    backgroundColor: "#b5179e",
+    color: "white",
+  },
+  sliderContainer: { alignSelf: "center" },
   borderBottom: {},
+  saveButton: {
+    marginHorizontal: Dimensions.get("window").width / 3,
+  },
 });
 
 export default Settings;
